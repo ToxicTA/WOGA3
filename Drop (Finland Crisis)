@@ -20,7 +20,7 @@ _Chemlight2 attachTo [_Cargo, [0,-0.5,-0.4]];
   _Cargo addMagazineCargoGlobal ["ace_csw_rhs_mag_TOW", 2];
   _Cargo addBackpackCargoGlobal ["usm_pack_alice", 2];
   
-  deleteVehicle Arrive;
+  deleteVehicle Arrive; //[Arrive] - TriggerName
     
 waitUntil {getPos _Cargo select 2 < 4};
 _vel = velocity _Cargo;
