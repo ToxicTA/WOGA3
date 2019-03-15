@@ -1,0 +1,45 @@
+----------
+//init.sqf
+{ _x addEventHandler ["GetIn", {[_this, ["O_crew_F","O_Soldier_SL_F"], ["driver","gunner"]] execVM "scripts\getInVeh.sqf"; }]; } forEach [bmp1,bmp2,bmp3,t80,shila];
+{ _x addEventHandler ["GetIn", {[_this, ["B_crew_F","B_Soldier_SL_F"], ["driver","gunner"]] execVM "scripts\getInVeh.sqf"; }]; } forEach [puma1,puma2,Leo];
+H1 addEventHandler ["GetIn", {[_this, ["B_Helipilot_F"], ["driver","gunner"]] execVM "scripts\getInVeh.sqf"; }];
+H2 addEventHandler ["GetIn", {[_this, ["B_Helipilot_F"], ["driver","gunner"]] execVM "scripts\getInVeh.sqf"; }];
+{ _x addEventHandler ["SeatSwitched", {[_this, ["O_crew_F","O_Soldier_SL_F"], [["driver"],["Turret",[0]]]] execVM "scripts\changeSeats.sqf"; }]; } forEach [bmp1,bmp2,bmp3,t80,shila];
+{ _x addEventHandler ["SeatSwitched", {[_this, ["B_crew_F","B_Soldier_SL_F"], [["driver"],["Turret",[0]]]] execVM "scripts\changeSeats.sqf"; }]; } forEach [puma1,puma2,Leo];
+---------
+//changeSeats.sqf
+private ["_vehicle"];
+
+_vehicle = _this select 0;
+typesOfVehCrew = _this select 1;
+seats = _this select 2;
+
+EjectSeat = {
+	if (!((typeOf ((_this select 0) select 1)) in typesOfVehCrew) && (local ((_this select 0) select 1))) then {
+		hint format ["%1", localize "STR_UnauthorisedCrew"];
+		moveOut ((_this select 0) select 1)
+	};
+};
+_assignedVehicleRoleArray = assignedVehicleRole (_vehicle select 1);
+if (_assignedVehicleRoleArray in seats) then {
+	call EjectSeat;
+};
+
+if (true) exitWith {};
+--------
+//getInVeh.sqf
+private ["_vehicle"];
+
+_vehicle = _this select 0;
+typesOfVehCrew = _this select 1;
+seats = _this select 2;
+
+if (local (_vehicle select 2)) then {
+	if ((_vehicle select 1 in seats) && !((typeOf (_vehicle select 2)) in typesOfVehCrew)) then {
+		moveOut (_vehicle select 2);
+		hint format ["%1", localize "STR_UnauthorisedCrew"];
+	};
+};
+
+if (true) exitWith {};
+-------
