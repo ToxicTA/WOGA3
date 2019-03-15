@@ -1,0 +1,15 @@
+0 spawn {
+     _zones = [Zone1,Zone2,Zone3,Zone4];
+    last_pos = getPosASL (vehicle player);
+    while {true} do {
+        _cond = false;
+        {if ((vehicle player) in list _x) exitWith {_cond = true}} forEach _zones;
+        if (_cond) then {
+            (vehicle player) setPosASL last_pos;
+            hintSilent "Запрещённая зона";
+        } else {
+            last_pos = getPosASL player;
+        };
+        sleep 1;
+	};
+};
