@@ -1,5 +1,5 @@
 0 spawn {
-     _zones = [Zone1,Zone2,Zone3,Zone4];
+     _zones = [Name,Name2,Name3,Name4];
     last_pos = getPosASL (vehicle player);
     while {true} do {
         _cond = false;
